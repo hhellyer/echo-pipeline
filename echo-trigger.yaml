@@ -1,0 +1,36 @@
+apiVersion: tekton.dev/v1alpha1
+kind: TriggerTemplate
+metadata:
+  name: echo-template
+spec:
+  resourcetemplates:
+    - apiVersion: tekton.dev/v1alpha1
+      kind: PipelineRun
+      metadata:
+        name: echo-pipelinerun-$(uid)
+      spec:
+        pipelineRef:
+            name: echo-pipeline
+        params:
+          - name: message
+            value: $(params.message)
+---
+apiVersion: tekton.dev/v1alpha1
+kind: TriggerBinding
+metadata:
+  name: echo-binding
+spec:
+  params:
+    - name: message
+      value: $(body.message)
+---
+apiVersion: tekton.dev/v1alpha1
+kind: EventListener
+metadata:
+  name: echolistener
+spec:
+  triggers:
+    - binding:
+        name: echo-binding
+      template:
+        name: echo-template

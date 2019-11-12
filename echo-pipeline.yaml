@@ -1,0 +1,15 @@
+apiVersion: tekton.dev/v1alpha1
+kind: Pipeline
+metadata:
+  name: echo-pipeline
+spec:
+  params:
+    - name: message
+      description: the message to display
+  tasks:
+    - name: say-echo
+      taskRef:
+        name: echo-message
+      params:
+        - name: message
+          value: $(params.message)

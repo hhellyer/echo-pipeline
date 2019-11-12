@@ -1,0 +1,19 @@
+apiVersion: tekton.dev/v1alpha1
+kind: Task
+metadata:
+  name: echo-message
+spec:
+  inputs:
+    params:
+      - name: message
+        description: message to display
+        default: "Hello World!"
+  steps:
+    - name: echo
+      image: ubuntu
+      env:
+        - name: INPUT_MESSAGE
+          value: $(inputs.params.message)
+      command: ["/bin/sh", "-c"]
+      args:
+        - echo $INPUT_MESSAGE 
