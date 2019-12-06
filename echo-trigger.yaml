@@ -22,7 +22,7 @@ metadata:
 spec:
   params:
     - name: message
-      value: $(body.message)
+      value: $(header.message)
 ---
 apiVersion: tekton.dev/v1alpha1
 kind: EventListener
