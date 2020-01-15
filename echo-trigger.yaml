@@ -29,6 +29,7 @@ kind: EventListener
 metadata:
   name: echolistener
 spec:
+  serviceAccountName: tekton-triggers-admin
   triggers:
     - binding:
         name: echo-binding
